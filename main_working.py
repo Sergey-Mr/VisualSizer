@@ -3,10 +3,10 @@ import imutils
 import numpy as np
 import os
 import math
-#from statistics import mean
 from roifind import roi_find
 from json_data_out import get_points
 #from find_head import find_head
+#from statistics import mean
 
 # read the image
 image = cv2.imread("mecd.jpg")
@@ -43,9 +43,14 @@ height = image.shape[0]
 width = image.shape[1]
 
 #Run openpose
+image_dir = '/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement'
+json_out = '/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement'
+image_out = '/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement'
+
 os.chdir('/home/serhii/openpose')
 print(os.getcwd())
-os.system('./build/examples/openpose/openpose.bin --net_resolution -1x128 --image_dir /home/serhii/Documents/PyProjects/Body-measurements/scripting-2 --write_json /home/serhii/Documents/PyProjects/Body-measurements/scripting-2/ --write_images /home/serhii/Documents/PyProjects/Body-measurements/scripting-2/')
+#os.system('./build/examples/openpose/openpose.bin --net_resolution -1x128 --image_dir /home/serhii/Documents/PyProjects/Body-measurements/scripting-2 --write_json /home/serhii/Documents/PyProjects/Body-measurements/scripting-2/ --write_images /home/serhii/Documents/PyProjects/Body-measurements/scripting-2/')
+os.system('./build/examples/openpose/openpose.bin --net_resolution -1x128 --image_dir ' + image_dir + ' --write_json ' + json_out +' --write_images ' + image_out)
 os.chdir('/home/serhii/Documents/PyProjects/Body-measurements/scripting-2/')
 print(os.getcwd())
 
@@ -84,17 +89,17 @@ def hands_measurements (hand_points_x, hand_points_y, body_size_cm, body_size_co
     length_v_y_1 = (int(hand_points_y[0])- int(hand_points_y[1]))**2
     length_v_1 = abs(length_v_x_1 + length_v_y_1)
     length_v_1 = math.sqrt(length_v_1)
-    print (length_v_1)
+    #print (length_v_1)
 
     length_v_x_2 = (int(hand_points_x[2])- int(hand_points_x[1]))**2
     length_v_y_2 = (int(hand_points_y[2])- int(hand_points_y[1]))**2
     length_v_2 = abs(length_v_x_2 + length_v_y_2)
     length_v_2 = math.sqrt(length_v_2)
-    print (length_v_2)
+    #print (length_v_2)
 
     lenght_of_hand = length_v_1 + length_v_2
     hand_in_cm = (lenght_of_hand * body_size_cm)/(body_size_coordiantes)
-    print (hand_in_cm)
+    #print (hand_in_cm)
 
     img = cv2.imread('mecd.jpg')
 
@@ -161,15 +166,4 @@ print ('Head height: ' + str(head_length))
 
 cv2.imshow('Head', head)
 cv2.waitKey(0)
-
 cv2.waitKey()
-
-'''
-I use 4 working scripts:
-
-1) main_working_2.py to find length of hands, shoulders, run openpose, analyze points of body
-2) roi-find.py uses yolo to find a human and restrict ROI
-3) jsond_data_out.py to get points after openpose and put them into main_working_2.py
-4) pytorch_working_01.py to get a mask of the body (white-black) 
-
-'''
