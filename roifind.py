@@ -20,6 +20,7 @@ def roi_find(image_input):
     blob = cv2.dnn.blobFromImage(img, 1/255, (416,416), (0, 0, 0), swapRB=True, crop=False) 
     net.setInput(blob)
     outs = net.forward(output_layers)
+    
     # Show information on the screen
     # Initialise variables
     class_ids = []
@@ -59,7 +60,7 @@ def roi_find(image_input):
             cv2.rectangle(img, (x,y), (x+w, y+h), color, 2)
             cv2.putText(img, label + "  " + confidence, (x, y+20), font, 1, color, 2)
 
-            print(x, y, w, h)
+            #print(x, y, w, h)
 
     #cv2.imshow('Img', img)
     #cv2.waitKey()
