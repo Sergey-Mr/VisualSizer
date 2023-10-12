@@ -4,6 +4,7 @@
 * [Technologies](#technologies)
 * [Repository explanation](#reposityory-explanation)
 * [Calculation logic](#calculation-logic)
+* [Development plan](#development-plan)
 
 ## General Info
 This python library is designed to provide accurate measurements of different parts of the human body from images of people. It is aimed to increase shopping experience foor the users of online clothing shops and reduce return rates for retailers.
@@ -26,3 +27,6 @@ Project is created with:
 
 ## Calculation logic
 Explain the segmentation idea, refer to particular reserches, explain how the arms and shoulders were calculated
+
+## Development plan
+Summary of the development plan
