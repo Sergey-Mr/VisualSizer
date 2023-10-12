@@ -29,4 +29,6 @@ Project is created with:
 Explain the segmentation idea, refer to particular reserches, explain how the arms and shoulders were calculated
 
 ## Development plan
-Summary of the development plan
+1) Finish implementing new functionality for detection of other body parts.
+2) Create a Docker package in order to make the installation of the library as easy as possible.
+3) Release the tutorial and demo.
