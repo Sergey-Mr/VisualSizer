@@ -1,4 +1,4 @@
-# Body-measurement python library
+# VisualSizer Python Library - Great Uni Hack 2023 3d place
 
 * [General info](#general-info)
 * [Technologies](#technologies)
