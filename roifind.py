@@ -68,14 +68,3 @@ def roi_find(image_input):
     return (x, y, w, h)
 
 roi_find('mecd.jpg')
-
-# Современное искуство - Tate modern museum
-# Tower - интересно. Сразу идти в royal скарбничка
-# London National gallery - большая галерея картин
-# Natural history museum - кости динозавров
-# British Science Museum
-# Tower Bridge - London eye
-# Oxford Street
-# Hyde Park/green park 
-# Мадам Тюсо
-

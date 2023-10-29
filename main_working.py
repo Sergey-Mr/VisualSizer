@@ -5,6 +5,7 @@ import os
 import math
 from roifind import roi_find
 from json_data_out import get_points
+
 #from find_head import find_head
 #from statistics import mean
 
@@ -12,7 +13,7 @@ from json_data_out import get_points
 image = cv2.imread("mecd.jpg")
 
 # ROI - detect a peson to be measured
-roi_find ('mecd.jpg')
+roi_find('mecd.jpg')
 x, y, w, h = roi_find('mecd.jpg')
 #image = image[y:y+h, x:x+w] 
 
@@ -42,17 +43,18 @@ image = image[y:y+h, x:x+w]
 height = image.shape[0]
 width = image.shape[1]
 
+print("Image height: ", height)
 #Run openpose
-image_dir = '/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement'
+image_dir = '/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement/images'
 json_out = '/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement'
-image_out = '/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement'
+image_out = '/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement/images'
 
-os.chdir('/home/serhii/openpose')
-print(os.getcwd())
+#os.chdir('/home/serhii/openpose')
+#print(os.getcwd())
 #os.system('./build/examples/openpose/openpose.bin --net_resolution -1x128 --image_dir /home/serhii/Documents/PyProjects/Body-measurements/scripting-2 --write_json /home/serhii/Documents/PyProjects/Body-measurements/scripting-2/ --write_images /home/serhii/Documents/PyProjects/Body-measurements/scripting-2/')
-os.system('./build/examples/openpose/openpose.bin --net_resolution -1x128 --image_dir ' + image_dir + ' --write_json ' + json_out +' --write_images ' + image_out)
-os.chdir('/home/serhii/Documents/PyProjects/Body-measurements/scripting-2/')
-print(os.getcwd())
+#os.system('./build/examples/openpose/openpose.bin --net_resolution -1x128 --image_dir ' + image_dir + ' --write_json ' + json_out +' --write_images ' + image_out)
+#os.chdir('/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement')
+#print(os.getcwd())
 
 # Getting points from openpose
 points = get_points('mecd_keypoints.json')
@@ -77,9 +79,23 @@ for point in points_group:
         else:
             pass
 
-#print (point_x)
+print (point_x)
 #print (point_y)
-
+#test = cv2.imread("mecd.jpg")
+#for i in range(len(point_x)):
+#    if i == 9:
+#        cv2.circle(test, (int(point_x[i]), int(point_y[i])), 3, (200, 0, 150), 3)
+#        print(point_x[9:12])
+#        print(point_x[12:15])
+#    else: 
+#        cv2.circle(test, (int(point_x[i]), int(point_y[i])), 3, (200, 100, 50), 3)
+#    next_point_index = i + 1
+#    if next_point_index < len(point_x):
+#        cv2.putText(test, f"({point_x[next_point_index]}, {point_y[next_point_index]})", (int(point_x[next_point_index]), int(point_y[next_point_index])), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+#        if next_point_index == 9:
+#            print("SEARCH", point_x[i], point_y[i])
+#    print(i)
+#    cv2.imshow('Image', test)
 
 #Find the lenght of the arm, using the openpose points example
 def hands_measurements (hand_points_x, hand_points_y, body_size_cm, body_size_coordiantes, **img): # ..., user_height, y+h
@@ -118,17 +134,33 @@ left_hand_y = point_y[2:5]
 right_hand_x = point_x[5:8]
 right_hand_y = point_y[5:8]
 
-#print (left_hand_x, left_hand_y)
+#print (left_hand_x, left_hand_y)   
 
 left_hand = hands_measurements(left_hand_x, left_hand_y, user_height, height)
 right_hand = hands_measurements(right_hand_x, right_hand_y, user_height, height)
 hand = (right_hand + left_hand)/2
 
-print ('Lenght of left hand: ' + str(left_hand))
-print ('Lenght of right hand: ' + str(right_hand))
-print ('Lenght of the arm: ' + str(hand))
+print ('Length of left hand: ' + str(left_hand))
+print ('Length of right hand: ' + str(right_hand))
+print ('Length of the arm: ' + str(hand))
 
 cv2.waitKey(0)
+#legs calculation
+test = cv2.imread('mecd.jpg')
+test = cv2.resize(test, (0, 0), fx=0.5, fy=0.5)
+left_leg_x = point_x[9:12]
+left_leg_y = point_y[9:12]
+print(left_leg_x, left_leg_y)
+
+right_leg_x = point_x[12:15]
+right_leg_y = point_y[12:15]
+
+left_leg = hands_measurements(left_leg_x, left_leg_y, user_height, height)
+right_leg = hands_measurements(right_leg_x, right_leg_y, user_height, height)
+leg = (right_leg + left_leg)/2
+print ('Length of the left leg: ' + str(left_leg))
+print ('Length of the right leg: ' + str(right_leg))
+print ('Length of the leg: ', str(leg))
 
 # Shoulders
 def shoulder_length(shoulder_point_1, shoulder_point_2, body_size_cm, body_size_coordinates):
@@ -146,6 +178,11 @@ shoulder_y = [point_y[2], point_y[5]]
 shoulder = shoulder_length(shoulder_x, shoulder_y, user_height, height)
 print('Length of the shoulder: ' + str(shoulder))
 
+torse_x = [point_x[1], point_x[8]]
+torse_y = [point_y[1], point_y[8]]
+torse = shoulder_length(torse_x, torse_y, user_height, height)
+print('Length of the torse: ' + str(torse))
+
 img = cv2.imread("mecd.jpg") # Image must be in the original size, because openpose did not include ROI
 
 # Find head to make a proportion to the body for further calculations:
@@ -162,8 +199,13 @@ height_head = head.shape[0]
 width_head = head.shape[1]
 
 head_length = (height_head * user_height)/height
-print ('Head height: ' + str(head_length))
+print ('Head length: ' + str(head_length))
 
-cv2.imshow('Head', head)
-cv2.waitKey(0)
-cv2.waitKey()
+#cv2.imshow('Head', head)
+#use the proportion for the further calculation, but first integrate pytorch thing
+
+#import pytorch_working_01  # Create a black-white mask using pytorch
+import mask_research
+
+#cv2.waitKey(0)
+#cv2.waitKey()
