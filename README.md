@@ -27,7 +27,7 @@ With a given picture and person`s height, it can meassure the length of the foll
 ## Calculation logic
 Used Python powered by OpenCV, OpenPose, Pytorch, YOLO. Main idea is to use OpenPose to detect the human body points and combine some of them into vectors representing different body parts. Aftwerwards calculate the magnitude of vectors and using a proportion of the given input of the body`s height to the amount of pixels representing the height.
 
-For the chest measurement we used the following approach: Turn the background of the picture into black and the body to white. Iterate over the pixels horizontally to check the difference between white pixels and detect the the beginning of the chest. Do this from the left and right parts, hence we completely eliminate hands from the picture. Calculate the horizontal length of the output image representing the lenght of the chest in pixels. Use the proportion described above to turn the lenght in pixels into cantimeters.
+For the chest measurement was used the following approach: Turn the background of the picture into black and the body to white. Iterate over the pixels horizontally to check the difference between white pixels and detect the the beginning of the chest. Do this from the left and right parts, hence we completely eliminate hands from the picture. Calculate the horizontal length of the output image representing the lenght of the chest in pixels. Use the proportion described above to turn the lenght in pixels into cantimeters.
 
 ## Future Plans
 1. Continue development and create an API so that it can be easily integrated with online shops.
