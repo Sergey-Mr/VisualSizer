@@ -44,4 +44,4 @@ Project is created with:
 * Cuda 11.7.r11.7
 * PyTorch 1.13.1+cu117
 * YOLO v5
-
+* Ubuntu 22.04.2 LTS

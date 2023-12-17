@@ -12,7 +12,7 @@ from json_data_out import get_points
 from matplotlib import pyplot as plt
 
 user_height = 176
-mask = cv2.imread('output.png')
+mask = cv2.imread('output-2.png')
 
 _, th1 = cv2.threshold(mask, 0, 255, cv2.THRESH_BINARY)  # if pixel`s colour is more than 0 it transforms it in white
 
@@ -82,7 +82,7 @@ hips_img = img[waist:hips, x_left:x_right]
 cv2.imshow('Hips', hips_img)
 
 # Contours
-image = cv2.imread('output.png')
+image = cv2.imread('output-2.png')
 im_bw = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
 
 # In hips: exclude points next to beginning and the end

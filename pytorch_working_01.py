@@ -8,7 +8,7 @@ from torchvision.utils import make_grid
 from torchvision.io import read_image
 from PIL import Image
 
-image_1_path = os.path.join ('mecd.jpg')
+image_1_path = os.path.join ('george.jpg')
 #image_1_path = os.path.join ('images-archive/fallowfield-1.jpg')
 
 image_1 = read_image(image_1_path)
@@ -21,7 +21,7 @@ def show(image):
     #plt.subplots_adjust(right = 1)
     #plt.subplots_adjust(left = 0)
     plt.axis('off')
-    plt.savefig('output.png', bbox_inches='tight',transparent=True, pad_inches=0)
+    plt.savefig('output-2.png', bbox_inches='tight',transparent=True, pad_inches=0)
     plt.show()
 
 #show(image_1)

@@ -10,16 +10,16 @@ from json_data_out import get_points
 #from statistics import mean
 
 # read the image
-image = cv2.imread("mecd.jpg")
+image = cv2.imread("george.jpg")
 
 # ROI - detect a peson to be measured
-roi_find('mecd.jpg')
-x, y, w, h = roi_find('mecd.jpg')
+roi_find('george.jpg')
+x, y, w, h = roi_find('george.jpg')
 #image = image[y:y+h, x:x+w] 
 
 
 #user_height = int(input('Input your height:')) # y+h
-user_height = 176
+user_height = 180
 
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 blur = cv2.GaussianBlur(gray,(3,3),8)
@@ -45,19 +45,20 @@ width = image.shape[1]
 
 print("Image height: ", height)
 #Run openpose
-image_dir = '/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement/images'
+print ("STARTING OPENPOSE")
+image_dir = '/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement/images-rafa'
 json_out = '/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement'
-image_out = '/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement/images'
+image_out = '/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement/images-rafa'
 
-#os.chdir('/home/serhii/openpose')
-#print(os.getcwd())
-#os.system('./build/examples/openpose/openpose.bin --net_resolution -1x128 --image_dir /home/serhii/Documents/PyProjects/Body-measurements/scripting-2 --write_json /home/serhii/Documents/PyProjects/Body-measurements/scripting-2/ --write_images /home/serhii/Documents/PyProjects/Body-measurements/scripting-2/')
-#os.system('./build/examples/openpose/openpose.bin --net_resolution -1x128 --image_dir ' + image_dir + ' --write_json ' + json_out +' --write_images ' + image_out)
-#os.chdir('/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement')
-#print(os.getcwd())
+os.chdir('/home/serhii/openpose')
+print(os.getcwd())
+os.system('./build/examples/openpose/openpose.bin --net_resolution -1x128 --image_dir /home/serhii/Documents/PyProjects/Body-measurements/main-git/Bodymeasurement --write_json /home/serhii/Documents/PyProjects/Body-measurements/main-git/Bodymeasurement --write_images /home/serhii/Documents/PyProjects/Body-measurements/main-git/Bodymeasurement/images-rafa')
+os.system('./build/examples/openpose/openpose.bin --net_resolution -1x128 --image_dir ' + image_dir + ' --write_json ' + json_out +' --write_images ' + image_out)
+os.chdir('/home/serhii/Documents/PyProjects/Body-measurements/main-git/Body-measurement')
+print(os.getcwd())
 
 # Getting points from openpose
-points = get_points('mecd_keypoints.json')
+points = get_points('george_keypoints.json')
 i = 0
 points_group = []
 while i <= len(points) - 3:
@@ -117,7 +118,7 @@ def hands_measurements (hand_points_x, hand_points_y, body_size_cm, body_size_co
     hand_in_cm = (lenght_of_hand * body_size_cm)/(body_size_coordiantes)
     #print (hand_in_cm)
 
-    img = cv2.imread('mecd.jpg')
+    img = cv2.imread('george.jpg')
 
     img = cv2.circle(img, (int(hand_points_x[0]), int(hand_points_y[0])), 3, (200, 100, 50), 3)
     img = cv2.circle(img, (int(hand_points_x[1]), int(hand_points_y[1])), 3, (200, 100, 50), 3)
@@ -146,7 +147,7 @@ print ('Length of the arm: ' + str(hand))
 
 cv2.waitKey(0)
 #legs calculation
-test = cv2.imread('mecd.jpg')
+test = cv2.imread('george.jpg')
 test = cv2.resize(test, (0, 0), fx=0.5, fy=0.5)
 left_leg_x = point_x[9:12]
 left_leg_y = point_y[9:12]
@@ -158,10 +159,10 @@ right_leg_y = point_y[12:15]
 left_leg = hands_measurements(left_leg_x, left_leg_y, user_height, height)
 right_leg = hands_measurements(right_leg_x, right_leg_y, user_height, height)
 leg = (right_leg + left_leg)/2
-print ('Length of the left leg: ' + str(left_leg))
-print ('Length of the right leg: ' + str(right_leg))
-print ('Length of the leg: ', str(leg))
-
+#print ('Length of the left leg: ' + str(left_leg))
+#print ('Length of the right leg: ' + str(right_leg))
+#print ('Length of the leg: ', str(leg))
+#
 # Shoulders
 def shoulder_length(shoulder_point_1, shoulder_point_2, body_size_cm, body_size_coordinates):
     shoulder_x = abs(int((shoulder_point_1[0]-shoulder_point_1[1]))) 
@@ -183,7 +184,7 @@ torse_y = [point_y[1], point_y[8]]
 torse = shoulder_length(torse_x, torse_y, user_height, height)
 print('Length of the torse: ' + str(torse))
 
-img = cv2.imread("mecd.jpg") # Image must be in the original size, because openpose did not include ROI
+img = cv2.imread("george.jpg") # Image must be in the original size, because openpose did not include ROI
 
 # Find head to make a proportion to the body for further calculations:
 # todo: continue further body parts allocation using the proportion

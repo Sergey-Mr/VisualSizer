@@ -67,4 +67,4 @@ def roi_find(image_input):
 
     return (x, y, w, h)
 
-roi_find('mecd.jpg')
+roi_find('george.jpg')
