@@ -16,6 +16,7 @@ def roi_find(image_input):
     img = cv2.imread(image_input)
 
     height, width, channel = img.shape
+
     # Detecting Objects
     blob = cv2.dnn.blobFromImage(img, 1/255, (416,416), (0, 0, 0), swapRB=True, crop=False) 
     net.setInput(blob)
@@ -28,25 +29,23 @@ def roi_find(image_input):
     boxes = []
 
     for out in outs:
-            for detection in out:
-                scores = detection[5:]
-                class_id = np.argmax(scores)
-                confidence = scores[class_id]
-                if confidence>0.5:
-                    # Object detected
-                    center_x = int(detection[0] * width)
-                    center_y = int(detection[1] * height)
-                    w = int(detection[2] * width)
-                    h = int(detection[3] * height)
-
-                    # Rectangle coordinates
-                    x = int (center_x - w/2)
-                    y = int (center_y - h/2)
-
-                    boxes.append([x, y, w, h])
-                    confidences.append(float(confidence))
-                    class_ids.append(class_id)
-
+        for detection in out:
+            scores = detection[5:]
+            class_id = np.argmax(scores)
+            confidence = scores[class_id]
+            if confidence>0.5:
+                # Object detected
+                center_x = int(detection[0] * width)
+                center_y = int(detection[1] * height)
+                w = int(detection[2] * width)
+                h = int(detection[3] * height)
+                # Rectangle coordinates
+                x = int (center_x - w/2)
+                y = int (center_y - h/2)
+                boxes.append([x, y, w, h])
+                confidences.append(float(confidence))
+                class_ids.append(class_id)
+                
     indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.4)
 
     # Label object
@@ -66,5 +65,3 @@ def roi_find(image_input):
     #cv2.waitKey()
 
     return (x, y, w, h)
-
-roi_find('mecd.jpg')
