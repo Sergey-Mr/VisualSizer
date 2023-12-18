@@ -192,7 +192,8 @@ print ('Head length: ' + str(head_length))
 
 #import pytorch_working_01  # Create a black-white mask using pytorch
 #mask_create(image_name)
-mask_research_func('output.png')
+head_img, chest_img, waist_img, hips_img = mask_research_func('output.png')
 detect_edges('output.png')
 
+cv2.imshow('Head-100', head_img)
 cv2.waitKey(0)

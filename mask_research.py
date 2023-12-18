@@ -23,10 +23,10 @@ def mask_research_func(image_name):
     img = cv2.circle(mask, (int(X[0]), int(Y[0])), 3, (200, 100, 50), 3) # top point
 
     # testing points
-    img = cv2.circle(mask, (89, 112), 3, (200, 100, 50), 3)
-    img = cv2.circle(mask, (98, 112), 3, (200, 100, 50), 3)
-    img = cv2.circle(mask, (173, 358), 3, (200, 100, 50), 3)
-    img = cv2.circle(mask, (91, 358), 3, (200, 100, 50), 3)
+    #img = cv2.circle(mask, (89, 112), 3, (200, 100, 50), 3)
+    #img = cv2.circle(mask, (98, 112), 3, (200, 100, 50), 3)
+    #img = cv2.circle(mask, (173, 358), 3, (200, 100, 50), 3)
+    #img = cv2.circle(mask, (91, 358), 3, (200, 100, 50), 3)
     #cv2.imshow('Point', img)
 
     # Divide body into parts
@@ -51,7 +51,7 @@ def mask_research_func(image_name):
     x_ind_min = X.index(x_left)
     y_left = Y[x_ind_min]
 
-    img = cv2.rectangle(img,(x_left,y_top),(x_right,y_bottom),(0,255,0),3)
+    #img = cv2.rectangle(img,(x_left,y_top),(x_right,y_bottom),(0,255,0),3)
 
     head= int(y_top + head_length)
     #img = cv2.rectangle(img, (x_left, y_top), (x_right, head), (0,255,240),3)
@@ -121,10 +121,12 @@ def mask_research_func(image_name):
     chest_length_cm = (chest_length_px * user_height)/height
 
     print("Chest length:", chest_length_cm)
-    cv2.imshow("Final", roi)
-    cv2.imshow('Result', image)
-    cv2.imshow('Mask', img)
-    cv2.waitKey(0)
+    #cv2.imshow("Final", roi)
+    #cv2.imshow('Result', image)
+    #cv2.imshow('Mask', img)
+ #
+    #cv2.waitKey(0)
+    return head_img, chest_img, waist_img, hips_img
 
 
 #mask_research(image_name)

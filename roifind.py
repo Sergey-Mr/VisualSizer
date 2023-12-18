@@ -56,7 +56,7 @@ def roi_find(image_input):
             label = str(classes[class_ids[i]])
             confidence = str(round(confidences[i],2))
             color = colors[i]
-            cv2.rectangle(img, (x,y), (x+w, y+h), color, 2)
+            #cv2.rectangle(img, (x,y), (x+w, y+h), color, 2)
             cv2.putText(img, label + "  " + confidence, (x, y+20), font, 1, color, 2)
 
             #print(x, y, w, h)
