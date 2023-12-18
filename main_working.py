@@ -59,11 +59,9 @@ def detect_edges(input_image):
     scale = 1
     delta = 0
 
-    input_image = cv2.imread(input_image)
+    #input_image = cv2.imread(input_image)
     grad_x = cv2.Sobel(input_image, ddepth, 1, 0, ksize=3, scale=scale, delta=delta, borderType=cv2.BORDER_DEFAULT)
     grad_y = cv2.Sobel(input_image, ddepth, 0, 1, ksize=3, scale=scale, delta=delta, borderType=cv2.BORDER_DEFAULT)
-
-    print(grad_y)
     
     abs_grad_x = cv2.convertScaleAbs(grad_x)
     abs_grad_y = cv2.convertScaleAbs(grad_y)
@@ -193,7 +191,6 @@ print ('Head length: ' + str(head_length))
 #import pytorch_working_01  # Create a black-white mask using pytorch
 #mask_create(image_name)
 head_img, chest_img, waist_img, hips_img = mask_research_func('output.png')
-detect_edges('output.png')
+detect_edges(waist_img)
 
-cv2.imshow('Head-100', head_img)
 cv2.waitKey(0)

@@ -106,17 +106,23 @@ def mask_research_func(image_name):
     roi = image[(y_broke[1]-10):(y_broke[1]+10), x_broke[1]:max(X)]
     black_pixels = np.where(roi == 0)
 
+    # Find the first black pixel on the RHS representing the start of the hand
     if len(black_pixels[1]) > 0:
         first_black_pixel = (black_pixels[0][np.min(black_pixels[0])], np.min(black_pixels[1]))
-        #print(f"First black pixel coordinates: ({first_black_pixel[1]}, {first_black_pixel[0]})")
+        print(f"First black pixel coordinates: ({first_black_pixel[1]}, {first_black_pixel[0]})")
 
     else:
         print("No black pixels found in the no_interest_left array.")
 
     cv2.circle(roi, (68,0), 3, (0, 255, 0), 2)
-    cv2.circle(image, (x_broke[1], y_broke[1]), 3, (0, 0, 255), 2)
-    cv2.circle(image, (left_part_hand_start, y_broke[1]), 3, (0, 0, 255), 2)
-    no_interest_left = image[0:max(Y), left_part_hand_start:max(X)]
+    cv2.circle(image, (x_broke[1], y_broke[1]), 3, (255, 0, 0), 2)
+
+    #new_roi = img[y_top:head, x_broke[1]:first_black_pixel[1]]
+    #hips_img = img[waist:hips, x_left:x_right]
+    #cv2.imshow('NEW ROI', hips_img)
+
+    #no_interest_left = image[waist:hips, x_broke[1]:black_pixels[1]]
+
     chest_length_px = int(left_part_hand_start - first_black_pixel[1])
     chest_length_cm = (chest_length_px * user_height)/height
 
@@ -124,7 +130,7 @@ def mask_research_func(image_name):
     #cv2.imshow("Final", roi)
     #cv2.imshow('Result', image)
     #cv2.imshow('Mask', img)
- #
+
     #cv2.waitKey(0)
     return head_img, chest_img, waist_img, hips_img
 
