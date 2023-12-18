@@ -53,6 +53,26 @@ def run_openpose(openpose_location, net_resolution, image_dir, json_out, image_o
     print(os.getcwd())
 
 
+def detect_edges(input_image):
+    '''User derivatives to find the contour of the body'''
+    ddepth = cv2.CV_16S
+    scale = 1
+    delta = 0
+
+    input_image = cv2.imread(input_image)
+    grad_x = cv2.Sobel(input_image, ddepth, 1, 0, ksize=3, scale=scale, delta=delta, borderType=cv2.BORDER_DEFAULT)
+    grad_y = cv2.Sobel(input_image, ddepth, 0, 1, ksize=3, scale=scale, delta=delta, borderType=cv2.BORDER_DEFAULT)
+
+    print(grad_y)
+    
+    abs_grad_x = cv2.convertScaleAbs(grad_x)
+    abs_grad_y = cv2.convertScaleAbs(grad_y)
+    
+    grad = cv2.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0)
+    cv2.imshow('Gradients', grad)
+
+
+
 image_name = "mecd.jpg"
 openpose_location = '/home/serhii/openpose'
 net_resolution = '1x128'
@@ -173,5 +193,6 @@ print ('Head length: ' + str(head_length))
 #import pytorch_working_01  # Create a black-white mask using pytorch
 #mask_create(image_name)
 mask_research_func('output.png')
+detect_edges('output.png')
 
 cv2.waitKey(0)
